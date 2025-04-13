@@ -3,17 +3,12 @@ package com.donut.tikdown.util
 import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.CookieManager
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -38,8 +33,6 @@ import com.donut.tikdown.ui.theme.MainTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
 
 
 fun addContentView(view: View): () -> Unit {
@@ -146,7 +139,7 @@ fun WebViewComponent(url: String) {
 }
 
 
-fun showDialogMessage(msg: String){
+fun showDialogMessage(msg: String) {
     MixDialogBuilder(msg).apply {
         setDefaultNegative()
         show()

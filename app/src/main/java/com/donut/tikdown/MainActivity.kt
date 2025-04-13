@@ -1,7 +1,6 @@
 package com.donut.tikdown
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -43,6 +42,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.net.toUri
 import com.donut.tikdown.ui.component.common.MixDialogBuilder
 import com.donut.tikdown.ui.theme.MainTheme
 import com.donut.tikdown.ui.theme.colorScheme
@@ -52,6 +52,7 @@ import com.donut.tikdown.util.client
 import com.donut.tikdown.util.copyToClipboard
 import com.donut.tikdown.util.extractUrls
 import com.donut.tikdown.util.formatFileSize
+import com.donut.tikdown.util.genRandomString
 import com.donut.tikdown.util.getVideoId
 import com.donut.tikdown.util.ignoreError
 import com.donut.tikdown.util.isTrue
@@ -177,7 +178,7 @@ class MainActivity : MixActivity("main") {
                                     setPositiveButton("打开") {
                                         val intent = Intent(
                                             Intent.ACTION_VIEW,
-                                            Uri.parse("https://github.com/invertgeek/TikDown")
+                                            "https://github.com/invertgeek/TikDown".toUri()
                                         )
                                         closeDialog()
                                         startActivity(intent)
@@ -229,7 +230,9 @@ class MainActivity : MixActivity("main") {
     suspend fun selectVideoName(): String =
         suspendCancellableCoroutine { task ->
             MixDialogBuilder("文件名称").apply {
-                var videoName by mutableStateOf("抖音下载")
+
+                var videoName by mutableStateOf("抖音下载 ${genRandomString(4)}")
+
                 if (videoUrl.contains("#")) {
                     videoName = videoUrl.substringAfter("#").substringBefore("#").trim()
                 }
@@ -251,7 +254,7 @@ class MainActivity : MixActivity("main") {
 
 
     private suspend fun saveVideo(videoUrl: String) {
-        val name = selectVideoName().replace(".","_")
+        val name = selectVideoName()
         MixDialogBuilder(
             "下载中",
             properties = DialogProperties(dismissOnClickOutside = false)

@@ -2,18 +2,19 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.gms.google-services")
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
     namespace = "com.donut.tikdown"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.donut.tikdown"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 8
-        versionName = "1.0.6"
+        targetSdk = 35
+        versionCode = 9
+        versionName = "1.0.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -71,7 +72,7 @@ dependencies {
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.gson)
     implementation(libs.firebase.analytics)
-    implementation(libs.gson)
+    implementation(libs.fastjson2.kotlin)
     implementation(libs.compose.video)
     implementation(libs.androidx.media3.exoplayer) // [Required] androidx.media3 ExoPlayer dependency
     implementation(libs.androidx.media3.session) // [Required] MediaSession Extension dependency

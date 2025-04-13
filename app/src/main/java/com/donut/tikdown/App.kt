@@ -1,5 +1,6 @@
 package com.donut.tikdown
 
+
 import android.app.Application
 import android.os.Looper
 import androidx.compose.foundation.layout.Column
@@ -11,16 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.donut.tikdown.ui.component.common.MixDialogBuilder
 import com.donut.tikdown.util.copyToClipboard
-
-
 import com.donut.tikdown.util.objects.MixActivity
 import com.donut.tikdown.util.showError
-import com.donut.tikdown.ui.component.common.MixDialogBuilder
 import com.tencent.mmkv.MMKV
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 
-val appScope by lazy { MainScope() }
+val appScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
 lateinit var kv: MMKV
 

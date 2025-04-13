@@ -19,9 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
-import java.util.Locale
-import kotlin.math.log10
-import kotlin.math.pow
 
 class ProgressContent(
     private var tip: String = "下载中"
@@ -30,8 +27,8 @@ class ProgressContent(
     private var bytesWritten: Long by mutableLongStateOf(0)
     private var contentLength: Long by mutableLongStateOf(0)
 
-    val ktorListener: suspend (bytesWritten: Long, bytesTotal: Long) -> Unit = { bytes, length ->
-        updateProgress(bytes, length)
+    val ktorListener: suspend (bytesWritten: Long, bytesTotal: Long?) -> Unit = { bytes, length ->
+        updateProgress(bytes, length ?: 1)
     }
 
     fun updateProgress(written: Long = bytesWritten, total: Long = contentLength) {

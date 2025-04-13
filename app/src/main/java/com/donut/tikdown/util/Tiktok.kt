@@ -74,6 +74,19 @@ val client = HttpClient(CIO) {
     }
 }
 
+fun String.sanitizeFileName(): String {
+    // 定义非法字符的正则表达式
+    val illegalChars = "[/\\\\:*?\"<>|]".toRegex()
+
+
+    return this
+        .replace(illegalChars, " ")
+        .trim()
+        .replace("\\s+".toRegex(), "_")
+        .takeLast(255)
+        .ifEmpty { "unnamed_file" }
+}
+
 @OptIn(InternalCoroutinesApi::class)
 suspend fun saveFileToStorage(
     url: String,
@@ -84,7 +97,7 @@ suspend fun saveFileToStorage(
 ): Uri? {
     val resolver = app.contentResolver
     val contentValues = ContentValues().apply {
-        put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
+        put(MediaStore.MediaColumns.DISPLAY_NAME, displayName.sanitizeFileName())
 //        put(MediaStore.MediaColumns.MIME_TYPE, "image/gif")
         put(MediaStore.MediaColumns.RELATIVE_PATH, directory)
     }

@@ -4,9 +4,9 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.util.Log
+import androidx.core.net.toUri
 import com.donut.tikdown.app
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.selects.select
@@ -77,7 +77,7 @@ fun formatFileSize(bytes: Long): String {
     )
 }
 
-fun getAppVersion(context: Context): Pair<String, Long> {
+fun getAppVersion(context: Context): Pair<String?, Long> {
     return try {
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
         val versionName = packageInfo.versionName
@@ -270,8 +270,8 @@ fun genRandomString(length: Int = 32): String {
 
 fun isValidUri(uriString: String): Boolean {
     try {
-        val uri = Uri.parse(uriString)
-        return uri != null && uri.scheme != null
+        val uri = uriString.toUri()
+        return uri.scheme != null
     } catch (e: Exception) {
         return false
     }
