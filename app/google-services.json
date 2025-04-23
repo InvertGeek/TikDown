@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1059564103613",
+    "project_id": "tikdown-f6e97",
+    "storage_bucket": "tikdown-f6e97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059564103613:android:3b87ef8d4e6e48226ad4d4",
+        "android_client_info": {
+          "package_name": "com.donut.tikdown"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEv305NVjlKIwGN68maYWvuMQ7vnDqhlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
