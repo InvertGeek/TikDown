@@ -16,14 +16,12 @@ import com.donut.tikdown.ui.component.common.MixDialogBuilder
 import com.donut.tikdown.util.copyToClipboard
 import com.donut.tikdown.util.objects.MixActivity
 import com.donut.tikdown.util.showError
-import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 val appScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
-lateinit var kv: MMKV
 
 private lateinit var innerApp: Application
 
@@ -71,8 +69,6 @@ class App : Application() {
             }
         }
         innerApp = this
-        MMKV.initialize(this)
-        kv = MMKV.defaultMMKV()
     }
 
 

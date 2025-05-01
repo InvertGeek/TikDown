@@ -220,9 +220,11 @@ fun fetchVideo(videoUrl: String) {
                     when (e.message) {
                         "不支持图文",
                         "不支持分段视频",
-                        "作品已失效", -> {
+                        "作品已失效",
+                            -> {
                             showToast("解析失败(${e.message})")
                         }
+
                         else -> {
                             showToast("解析失败(${e.message}),重试中")
                             fetchVideo(videoUrl)
