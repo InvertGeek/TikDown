@@ -33,8 +33,8 @@ import androidx.compose.ui.window.DialogProperties
 import com.donut.tikdown.ui.component.common.MixDialogBuilder
 import com.donut.tikdown.ui.theme.MainTheme
 import com.donut.tikdown.ui.theme.colorScheme
+import com.donut.tikdown.util.AsyncEffect
 import com.donut.tikdown.util.ProgressContent
-import com.donut.tikdown.util.UseEffect
 import com.donut.tikdown.util.client
 import com.donut.tikdown.util.copyToClipboard
 import com.donut.tikdown.util.extractUrls
@@ -119,7 +119,7 @@ private suspend fun saveVideo(videoUrl: String) {
             val progress = remember {
                 ProgressContent()
             }
-            UseEffect {
+            AsyncEffect {
                 saveFileToStorage(videoUrl, "${name}.mp4", progress)
                 showToast("文件已保存到下载目录")
                 closeDialog()

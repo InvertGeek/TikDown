@@ -105,7 +105,7 @@ fun TipText(content: String, onClick: () -> Unit = {}) {
 
 @Composable
 @NonRestartableComposable
-fun UseEffect(
+fun AsyncEffect(
     vararg keys: Any?,
     block: suspend CoroutineScope.() -> Unit
 ) {
@@ -117,10 +117,10 @@ fun UseEffect(
 
 @Composable
 @NonRestartableComposable
-fun UseEffect(
+fun AsyncEffect(
     block: suspend CoroutineScope.() -> Unit
 ) {
-    UseEffect(Unit, block = block)
+    AsyncEffect(Unit, block = block)
 }
 
 @Composable

@@ -27,7 +27,8 @@ import io.ktor.client.request.url
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.http.userAgent
 import io.ktor.serialization.gson.gson
-import io.ktor.utils.io.jvm.javaio.toInputStream
+import io.ktor.utils.io.copyAndClose
+import io.ktor.utils.io.streams.asByteWriteChannel
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -134,15 +135,13 @@ suspend fun saveFileToStorage(
     }
     client.prepareGet {
         timeout {
-            requestTimeoutMillis = 1000 * 60 * 60
+            requestTimeoutMillis = 1000 * 60 * 60 * 24
         }
         url(url)
         onDownload(progress.ktorListener)
     }.execute {
         resolver.openOutputStream(fileUri)?.use { output ->
-            it.bodyAsChannel().toInputStream().use { input ->
-                input.copyTo(output)
-            }
+            it.bodyAsChannel().copyAndClose(output.asByteWriteChannel())
         }
     }
     return fileUri
