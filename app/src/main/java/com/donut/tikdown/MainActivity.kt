@@ -21,7 +21,7 @@ class MainActivity : MixActivity("main") {
             if (clipboardText.isEmpty() || clipboardText.contentEquals(videoUrl)) {
                 return@launch
             }
-            var videoUrl = clipboardText
+            videoUrl = clipboardText
             fetchVideo(videoUrl)
         }
     }
