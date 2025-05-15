@@ -113,7 +113,7 @@ private suspend fun saveVideo(videoUrl: String) {
     val name = selectVideoName()
     MixDialogBuilder(
         "下载中",
-        properties = DialogProperties(dismissOnClickOutside = false)
+        properties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = false)
     ).apply {
         setContent {
             val progress = remember {
