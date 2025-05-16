@@ -19,9 +19,11 @@ import com.donut.tikdown.util.addComposeView
 class MixDialogBuilder(
     private var title: String,
     private val tag: String = title,
+    autoClose: Boolean = true,
     private val properties: DialogProperties = DialogProperties(
-//        usePlatformDefaultWidth = false
-    )
+        dismissOnBackPress = autoClose,
+        dismissOnClickOutside = autoClose
+    ),
 ) {
     private var content = @Composable {}
     private var positiveButton = @Composable {}

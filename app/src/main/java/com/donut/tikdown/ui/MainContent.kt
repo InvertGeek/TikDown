@@ -29,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.DialogProperties
 import com.donut.tikdown.ui.component.common.MixDialogBuilder
 import com.donut.tikdown.ui.theme.MainTheme
 import com.donut.tikdown.ui.theme.colorScheme
@@ -113,7 +112,7 @@ private suspend fun saveVideo(videoUrl: String) {
     val name = selectVideoName()
     MixDialogBuilder(
         "下载中",
-        properties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = false)
+        autoClose = false
     ).apply {
         setContent {
             val progress = remember {
@@ -184,9 +183,8 @@ fun fetchVideo(videoUrl: String) {
         return
     }
     MixDialogBuilder(
-        "解析中", properties = DialogProperties(
-            dismissOnClickOutside = false
-        )
+        "解析中",
+        autoClose = false
     ).apply {
         setContent {
             LaunchedEffect(Unit) {
