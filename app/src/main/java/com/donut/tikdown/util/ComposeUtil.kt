@@ -16,7 +16,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.ProvidableCompositionLocal
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
@@ -33,6 +32,7 @@ import com.donut.tikdown.ui.theme.MainTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 fun addContentView(view: View): () -> Unit {
@@ -109,9 +109,8 @@ fun AsyncEffect(
     vararg keys: Any?,
     block: suspend CoroutineScope.() -> Unit
 ) {
-    val scope = rememberCoroutineScope()
     LaunchedEffect(*keys) {
-        scope.launch(Dispatchers.IO, block = block)
+        withContext(Dispatchers.IO, block)
     }
 }
 

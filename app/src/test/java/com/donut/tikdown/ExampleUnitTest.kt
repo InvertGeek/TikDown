@@ -1,6 +1,5 @@
 package com.donut.tikdown
 
-import com.donut.tikdown.util.extractUrls
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
