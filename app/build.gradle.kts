@@ -13,8 +13,8 @@ android {
         applicationId = "com.donut.tikdown"
         minSdk = 26
         targetSdk = 35
-        versionCode = 17
-        versionName = "1.0.15"
+        versionCode = 18
+        versionName = "1.0.16"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -53,9 +53,7 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

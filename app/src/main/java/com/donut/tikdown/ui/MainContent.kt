@@ -89,7 +89,11 @@ suspend fun selectVideoName(): String =
             var videoName by mutableStateOf("抖音下载 ${genRandomString(4)}")
 
             if (videoUrl.contains("#")) {
-                videoName = videoUrl.substringAfter("#").substringBefore("#").trim()
+                videoUrl.substringAfter("#").substringBefore("#").trim().let {
+                    if (it.isNotEmpty()) {
+                        videoName = it
+                    }
+                }
             }
             setContent {
                 OutlinedTextField(value = videoName, onValueChange = {
@@ -100,6 +104,10 @@ suspend fun selectVideoName(): String =
             }
             setDefaultNegative()
             setPositiveButton("确认") {
+                if (videoName.trim().isEmpty()) {
+                    showToast("文件名称不能为空")
+                    return@setPositiveButton
+                }
                 task.resume(videoName)
                 closeDialog()
             }
