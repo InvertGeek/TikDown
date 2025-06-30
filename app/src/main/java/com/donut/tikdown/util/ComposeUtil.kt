@@ -36,7 +36,7 @@ import kotlinx.coroutines.withContext
 
 
 fun addContentView(view: View): () -> Unit {
-    currentActivity.addContentView(
+    currentActivity?.addContentView(
         view,
         ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -66,8 +66,9 @@ fun OnDispose(block: () -> Unit) {
 }
 
 fun addComposeView(content: @Composable (removeView: () -> Unit) -> Unit): () -> Unit {
+    val context = currentActivity ?: return {}
     return addContentView(
-        ComposeView(currentActivity).apply {
+        ComposeView(context).apply {
             setContent {
                 MainTheme {
                     content {

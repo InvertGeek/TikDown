@@ -94,7 +94,7 @@ fun Home() {
                             "https://github.com/invertgeek/TikDown".toUri()
                         )
                         closeDialog()
-                        currentActivity.startActivity(intent)
+                        currentActivity?.startActivity(intent)
                     }
                     show()
                 }
