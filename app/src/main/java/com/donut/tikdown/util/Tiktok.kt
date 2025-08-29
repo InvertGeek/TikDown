@@ -3,6 +3,7 @@ package com.donut.tikdown.util
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -50,11 +51,11 @@ suspend fun getVideoId(videoUrl: String): String {
         mutex.withLock {
             suspendCancellableCoroutine { task ->
                 genClient(app, task, videoUrl)
-//        addComposeView {
-//            AndroidView(factory = { context ->
-//                genClient(context, task, videoUrl)
-//            }, modifier = Modifier.systemBarsPadding())
-//        }
+//                addComposeView {
+//                    AndroidView(factory = { context ->
+//                        genClient(context, task, videoUrl)
+//                    }, modifier = Modifier.systemBarsPadding())
+//                }
             }
         }
     }
@@ -160,6 +161,27 @@ fun genClient(context: Context, task: CancellableContinuation<String>, videoUrl:
                 block()
             }
 
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+
+                val js = """
+            (function waitAndClick() {
+                const el = document.querySelector('.poster');
+                if (!el) {
+                    setTimeout(waitAndClick, 200);
+                    return "waiting";
+                }
+                el.click();
+                return el.src;
+            })();
+        """.trimIndent()
+
+                webView.evaluateJavascript(js) { result ->
+                    debug("WebViewClick result: $result")
+                }
+            }
+
+
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
                 request: WebResourceRequest?,
@@ -219,6 +241,7 @@ fun genClient(context: Context, task: CancellableContinuation<String>, videoUrl:
             mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
             cacheMode = WebSettings.LOAD_DEFAULT
             databaseEnabled = true
+            mediaPlaybackRequiresUserGesture = false
             val cookieManager = CookieManager.getInstance()
             cookieManager.setAcceptCookie(true)
             cookieManager.setAcceptThirdPartyCookies(webView, true)
