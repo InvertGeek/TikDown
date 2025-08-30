@@ -1,18 +1,18 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
-    alias(libs.plugins.compose.compiler)
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
     namespace = "com.donut.tikdown"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.donut.tikdown"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 20
         versionName = "1.0.18"
 
@@ -62,30 +62,28 @@ android {
 }
 
 dependencies {
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.cio)
-    implementation(libs.ktor.network)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.gson)
-    implementation(libs.firebase.analytics)
-    implementation(libs.fastjson2.kotlin)
-    implementation(libs.compose.video)
-    implementation(libs.androidx.media3.exoplayer) // [Required] androidx.media3 ExoPlayer dependency
-    implementation(libs.androidx.media3.session) // [Required] MediaSession Extension dependency
-    implementation(libs.androidx.media3.ui) // [Required] Base Player UI
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("io.ktor:ktor-client-core:3.1.2")
+    implementation("io.ktor:ktor-client-cio:3.1.2")
+    implementation("androidx.core:core-ktx:1.16.0")
+    implementation("com.google.firebase:firebase-analytics:22.4.0")
+    implementation("io.sanghun:compose-video:1.2.0")
+    implementation("androidx.media3:media3-exoplayer:1.6.1") // [Required] androidx.media3 ExoPlayer dependency
+    implementation("androidx.media3:media3-session:1.6.1")   // [Required] MediaSession Extension dependency
+    implementation("androidx.media3:media3-ui:1.6.1")        // [Required] Base Player UI
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.0")
+    implementation("androidx.activity:activity-compose:1.10.1")
+    implementation(platform("androidx.compose:compose-bom:2024.08.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.08.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }

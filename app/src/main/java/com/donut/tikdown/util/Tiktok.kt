@@ -20,14 +20,12 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.onDownload
 import io.ktor.client.plugins.timeout
 import io.ktor.client.request.prepareGet
 import io.ktor.client.request.url
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.http.userAgent
-import io.ktor.serialization.gson.gson
 import io.ktor.utils.io.copyAndClose
 import io.ktor.utils.io.streams.asByteWriteChannel
 import kotlinx.coroutines.CancellableContinuation
@@ -67,9 +65,6 @@ const val USER_AGENT =
 val client = HttpClient(CIO) {
     install(DefaultRequest) {
         userAgent(USER_AGENT)
-    }
-    install(ContentNegotiation) {
-        gson()
     }
     install(HttpTimeout) {
 
