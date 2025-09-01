@@ -31,6 +31,7 @@ import io.ktor.utils.io.streams.asByteWriteChannel
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -158,7 +159,10 @@ fun genClient(context: Context, task: CancellableContinuation<String>, videoUrl:
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
+                playVideo(2000)
+            }
 
+            fun playVideo(delay: Long) {
                 val js = """
             (function waitAndClick() {
                 const el = document.querySelector('.poster');
@@ -170,9 +174,11 @@ fun genClient(context: Context, task: CancellableContinuation<String>, videoUrl:
                 return el.src;
             })();
         """.trimIndent()
-
-                webView.evaluateJavascript(js) { result ->
-                    debug("WebViewClick result: $result")
+                appScope.launch {
+                    delay(delay)
+                    webView.evaluateJavascript(js) { result ->
+                        debug("WebViewClick result: $result")
+                    }
                 }
             }
 
@@ -200,6 +206,9 @@ fun genClient(context: Context, task: CancellableContinuation<String>, videoUrl:
                 request: WebResourceRequest?,
             ): WebResourceResponse? {
                 val url = request?.url.toString()
+                if (url.contains("douyinpic.com")) {
+                    playVideo(0)
+                }
                 if (url.contains("/captcha/")) {
                     endClientWith {
                         task.resumeWithException(Exception("出现验证码"))
